@@ -3,7 +3,6 @@ package org.keionline.keionline;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -35,7 +34,6 @@ import org.keionline.keionline.feedlib.SimpleRss2Parser;
 import org.keionline.keionline.feedlib.RSSItem;
 
 import org.keionline.keionline.adapters.ArticleAdapter;
-import org.keionline.keionline.adapters.MyListAdapter;
 import org.keionline.keionline.adapters.PagerAdapter;
 import org.keionline.keionline.feeds.Article;
 
@@ -106,13 +104,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void loadArticle(String url) {
-        Intent intent = new Intent(this, ArticleView.class);
-        intent.putExtra("key", url); //can't pass in article object?
-        startActivityForResult(intent, 0); //Activity load = 0
-        finish();
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -139,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public static class ArticleFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -152,10 +143,10 @@ public class MainActivity extends AppCompatActivity {
         private SimpleRss2ParserCallback mCallback;
 
 
-        public PlaceholderFragment() {
+        public ArticleFragment() {
         }
 
-        public void populateList(ArrayList<Article> articles) {
+        public void populateArticleList(ArrayList<Article> articles) {
             mList.setAdapter(new ArticleAdapter(getContext(), R.layout.article_row, articles));
         }
 
@@ -163,8 +154,8 @@ public class MainActivity extends AppCompatActivity {
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
+        public static ArticleFragment newInstance(int sectionNumber) {
+            ArticleFragment fragment = new ArticleFragment();
             Bundle args = new Bundle();
             args.putInt(ARG_SECTION_NUMBER, sectionNumber);
             fragment.setArguments(args);
@@ -191,8 +182,9 @@ public class MainActivity extends AppCompatActivity {
                     Article a = articles.get(i);
                     // CHANGE INTENT depending on the
                     if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-                        Intent y = new Intent(Intent.ACTION_VIEW, Uri.parse(a.getUrl()));
-                        startActivityForResult(y, 0); //ACTIVITY_LOAD = 0?
+                        loadArticle(a.getUrl(), a.getTitle());
+                        //Intent y = new Intent(Intent.ACTION_VIEW, Uri.parse(a.getDescription()));
+                        //startActivityForResult(y, 0); //ACTIVITY_LOAD = 0?
                     } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
                         // Audio Array is broken
                         // play as a service
@@ -206,6 +198,13 @@ public class MainActivity extends AppCompatActivity {
             });
 
             return rootView;
+        }
+
+        private void loadArticle(String url, String title) {
+            Intent intent = new Intent(getContext(), ArticleView.class);
+            intent.putExtra("url", url); //can't pass in article object?
+            intent.putExtra("title", title);
+            startActivityForResult(intent, 0); //Activity load = 0
         }
 
         private SimpleRss2ParserCallback getCallback(){
@@ -224,11 +223,11 @@ public class MainActivity extends AppCompatActivity {
                             articles.add(a);
                         }
 
-                        mList.setAdapter(
-                                new MyListAdapter(getContext(),R.layout.article_row, (ArrayList<RSSItem>) items)
-                        );
+                        //mList.setAdapter(
+                        //        new MyListAdapter(getContext(),R.layout.article_row, (ArrayList<RSSItem>) items)
+                        //);
+                        populateArticleList(articles);
                     }
-
                     @Override
                     public void onError(Exception ex) {
                         Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -303,12 +302,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+            // Return a ArticleFragment (defined as a static inner class below).
             switch(position) {
-                case 0: return PlaceholderFragment.newInstance(position + 1);
-                case 1: return PlaceholderFragment.newInstance(position + 1);
+                case 0: return ArticleFragment.newInstance(position + 1);
+                case 1: return ArticleFragment.newInstance(position + 1);
                 case 2: return AboutFragment.newInstance(position + 1);
-                default: return PlaceholderFragment.newInstance(position + 1);
+                default: return ArticleFragment.newInstance(position + 1);
             }
         }
 

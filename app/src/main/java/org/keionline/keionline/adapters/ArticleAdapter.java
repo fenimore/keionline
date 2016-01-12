@@ -51,7 +51,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
                     txt.setText(a.getTitle());
             }
             if (tag != null) {
-                    tag.setText(a.getCreator());
+                    tag.setText(a.getPubdate());
             }
 
         }

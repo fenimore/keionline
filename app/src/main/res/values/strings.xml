@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">keionline</string>
+    <string name="app_name">KEI Online</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="about_app">This applications gives access to KEI\'s blog and video feed</string>
