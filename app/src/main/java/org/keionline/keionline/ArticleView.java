@@ -1,11 +1,15 @@
 package org.keionline.keionline;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
 import android.webkit.WebView;
+import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,6 +24,8 @@ import java.io.IOException;
  */
 public class ArticleView extends AppCompatActivity {
 
+    private TextView testing;
+    private WebView webview;
 
     private String title;
     private String url;
@@ -28,13 +34,22 @@ public class ArticleView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        WebView webview = new WebView(this);
-        setContentView(webview);
-        webview.loadData("Loading", "text/html", "UTF-8");
+        setContentView(R.layout.activity_article);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitleTextColor(Color.BLACK);
+        toolbar.setLogo(R.mipmap.ic_launcher);
+        //TextView testing = (TextView) findViewById(R.id.testing);
+
+        //WebView webview = new WebView(this);
+        //setContentView(webview);
+        //webview.loadData("Loading", "text/html", "UTF-8");
+
 
         Bundle extras = getIntent().getExtras();
-        final String url = (String) extras.get("url");
-        final String title = (String) extras.get("title");
+        url = (String) extras.get("url");
+        title = (String) extras.get("title");
         // Author
         new RetrieveContent().execute(url);
         //WebView webview = new WebView(this);
@@ -57,17 +72,20 @@ public class ArticleView extends AppCompatActivity {
 
         protected void onPostExecute(String result){
             super.onPostExecute(result);
-            WebView webview = new WebView(getBaseContext());
-            setContentView(webview);
-
+            webview = new WebView(getBaseContext());
+            //setContentView(webview);
             webview.loadData(result, "text/html", "UTF-8"); //but don't just
+            webview.getSettings().setLoadWithOverviewMode(true);
+           // if(result != null) testing.setText(result);
         }
     }
+
+    // Use Jsoup to get the content? This is sloppy
     private String getContent(String url) throws IOException {
         Document doc = Jsoup.connect(url).get();
         Element data = doc.getElementsByClass("content").get(3);// get the third content div,
-        String thisone = data.select("img").first().attr("abs:src");
         String cont = data.toString();
+        Log.d("woop", cont);
         return cont;
     }
 
