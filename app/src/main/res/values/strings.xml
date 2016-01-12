@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">keionline</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="about_app">This applications gives access to KEI\'s blog and video feed</string>
+    <string name="about_kei">Knowledge Ecology International</string>
+    <string name="about_instructions">Instruct</string>
+    <string name="about_info">more info</string>
+</resources>
