@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.annotation.ColorRes;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -28,9 +29,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.keionline.keionline.feedlib.SimpleRss2ParserCallback;
 import org.keionline.keionline.feedlib.SimpleRss2Parser;
 import org.keionline.keionline.feedlib.RSSItem;
@@ -154,6 +159,13 @@ public class MainActivity extends AppCompatActivity {
         public void populateArticleList(ArrayList<Article> articles) {
             mList.setAdapter(new ArticleAdapter(getContext(), R.layout.article_row, articles));
         }
+        private String getArticleContent(String url) throws IOException {
+            Document doc = Jsoup.connect(url).get();
+            Element data = doc.getElementsByClass("content").get(3);// get the third content div,
+            String cont = data.toString();
+            Log.d("woop", cont);
+            return cont;
+        }
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -187,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
                     Article a = articles.get(i);
                     // CHANGE INTENT depending on the
                     if (getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
-                        loadArticle(a.getUrl(), a.getTitle());
+                        loadArticle(a.getUrl(), a.getTitle(), a.getDescription());
                         //Intent y = new Intent(Intent.ACTION_VIEW, Uri.parse(a.getDescription()));
                         //startActivityForResult(y, 0); //ACTIVITY_LOAD = 0?
                     } else if (getArguments().getInt(ARG_SECTION_NUMBER) == 2) {
@@ -205,10 +217,11 @@ public class MainActivity extends AppCompatActivity {
             return rootView;
         }
 
-        private void loadArticle(String url, String title) {
+        private void loadArticle(String url, String title, String content) {
             Intent intent = new Intent(getContext(), ArticleView.class);
             intent.putExtra("url", url); //can't pass in article object?
             intent.putExtra("title", title);
+            intent.putExtra("content", content);
             startActivityForResult(intent, 0); //Activity load = 0
         }
 
@@ -219,12 +232,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onFeedParsed(List<RSSItem> items) {
                         for(int i = 0; i < items.size(); i++){
-                            Log.d("SimpleRss2ParserDemo",items.get(i).getTitle());
+                            Log.d("SimpleRss2ParserDemo", items.get(i).getTitle());
                             Article a = new Article();
                             a.setTitle(items.get(i).getTitle());
                             a.setPubdate(items.get(i).getDate());
                             a.setUrl(items.get(i).getLink().toString());
-                            a.setDescription(items.get(i).getContent());
+                            new RetrieveContent().execute(a);
                             articles.add(a);
                         }
 
@@ -242,7 +255,29 @@ public class MainActivity extends AppCompatActivity {
 
             return mCallback;
         }
+        class RetrieveContent extends AsyncTask<Article, Void, Article> {
+
+            private Exception exception;
+
+
+            protected Article doInBackground(Article... articles){
+                try {
+                    String cont = getArticleContent(articles[0].getUrl());
+                    articles[0].setDescription(cont);
+                    return articles[0];
+                }catch (Exception e){
+                    this.exception = e;
+                    return null;
+                }
+            }
+
+            protected void onPostExecute(Article result){
+                super.onPostExecute(result);
+            }
+        }
+
     }
+
     /**
      * A placeholder fragment containing a simple view.
      */

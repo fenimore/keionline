@@ -34,6 +34,13 @@ public class ArticleView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_article);
+        webview = (WebView) findViewById(R.id.webview);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitleTextColor(Color.BLACK);
+        toolbar.setLogo(R.mipmap.ic_launcher);
         //setContentView(R.layout.activity_article);
         //TextView testing = (TextView) findViewById(R.id.testing);
 
@@ -45,15 +52,26 @@ public class ArticleView extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         url = (String) extras.get("url");
         title = (String) extras.get("title");
+        //content = (String) extras.get("content");
+        //Log.d("content", content);
+        //webview.loadData("Loading", "text/html", "UTF-8");
         // Author
         new RetrieveContent().execute(url);
+
+
         //WebView webview = new WebView(this);
         //setContentView(webview);
         //webview.loadData(content, "text/html", "UTF-8"); //but don't just load the URL, but load te content div within. Yikes.
     }
+
+    public interface OnTaskCompleted{
+        void onTaskCompleted();
+    }
+
     class RetrieveContent extends AsyncTask<String, Void, String>{
 
         private Exception exception;
+
 
         protected String doInBackground(String... urls){
             try {
@@ -68,7 +86,7 @@ public class ArticleView extends AppCompatActivity {
         protected void onPostExecute(String result){
             super.onPostExecute(result);
             //setContentView(R.layout.activity_article);
-            webview = new WebView(getBaseContext());
+            //webview = new WebView(getBaseContext());
             setContentView(webview);
             webview.loadData(result, "text/html", "UTF-8"); //but don't just
             // webview.getSettings().setLoadWithOverviewMode(true);
