@@ -34,12 +34,7 @@ public class ArticleView extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_article);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setTitleTextColor(Color.BLACK);
-        toolbar.setLogo(R.mipmap.ic_launcher);
+        //setContentView(R.layout.activity_article);
         //TextView testing = (TextView) findViewById(R.id.testing);
 
         //WebView webview = new WebView(this);
@@ -72,11 +67,17 @@ public class ArticleView extends AppCompatActivity {
 
         protected void onPostExecute(String result){
             super.onPostExecute(result);
+            //setContentView(R.layout.activity_article);
             webview = new WebView(getBaseContext());
-            //setContentView(webview);
+            setContentView(webview);
             webview.loadData(result, "text/html", "UTF-8"); //but don't just
-            webview.getSettings().setLoadWithOverviewMode(true);
+            // webview.getSettings().setLoadWithOverviewMode(true);
            // if(result != null) testing.setText(result);
+            //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            //setSupportActionBar(toolbar);
+            //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            //toolbar.setTitleTextColor(Color.BLACK);
+            //toolbar.setLogo(R.mipmap.ic_launcher);
         }
     }
 
