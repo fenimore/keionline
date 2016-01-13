@@ -87,7 +87,7 @@ public class ArticleView extends AppCompatActivity {
             super.onPostExecute(result);
             //setContentView(R.layout.activity_article);
             //webview = new WebView(getBaseContext());
-            setContentView(webview);
+            //setContentView(webview);
             webview.loadData(result, "text/html", "UTF-8"); //but don't just
             // webview.getSettings().setLoadWithOverviewMode(true);
            // if(result != null) testing.setText(result);

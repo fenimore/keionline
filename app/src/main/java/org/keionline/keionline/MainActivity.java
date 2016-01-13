@@ -159,13 +159,6 @@ public class MainActivity extends AppCompatActivity {
         public void populateArticleList(ArrayList<Article> articles) {
             mList.setAdapter(new ArticleAdapter(getContext(), R.layout.article_row, articles));
         }
-        private String getArticleContent(String url) throws IOException {
-            Document doc = Jsoup.connect(url).get();
-            Element data = doc.getElementsByClass("content").get(3);// get the third content div,
-            String cont = data.toString();
-            Log.d("woop", cont);
-            return cont;
-        }
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -237,7 +230,6 @@ public class MainActivity extends AppCompatActivity {
                             a.setTitle(items.get(i).getTitle());
                             a.setPubdate(items.get(i).getDate());
                             a.setUrl(items.get(i).getLink().toString());
-                            new RetrieveContent().execute(a);
                             articles.add(a);
                         }
 
@@ -254,26 +246,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
             return mCallback;
-        }
-        class RetrieveContent extends AsyncTask<Article, Void, Article> {
-
-            private Exception exception;
-
-
-            protected Article doInBackground(Article... articles){
-                try {
-                    String cont = getArticleContent(articles[0].getUrl());
-                    articles[0].setDescription(cont);
-                    return articles[0];
-                }catch (Exception e){
-                    this.exception = e;
-                    return null;
-                }
-            }
-
-            protected void onPostExecute(Article result){
-                super.onPostExecute(result);
-            }
         }
 
     }
