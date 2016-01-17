@@ -278,8 +278,6 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Video> videos = new ArrayList<Video>(15);
 
         private static final String ARG_SECTION_NUMBER = "section_number";
-        private SimpleRss2ParserCallback mCallback;
-
 
         public VideoFragment() {
         }
@@ -303,17 +301,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            //TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            //textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            //SimpleRss2Parser parser = new SimpleRss2Parser("https://www.youtube.com/feeds/videos.xml?channel_id=UCKCwOrg52WVg9-VQ4IIi6hg", getCallback());
-            //parser.parseAsync();
-            //new GetBlog().execute("http://keionline.org/blog/feed");
-            //new GetAudioFeed().execute("https://www.youtube.com/feeds/videos.xml?channel_id=UCKCwOrg52WVg9-VQ4IIi6hg"); // must be called second
+            final View rootView = inflater.inflate(R.layout.video_view, container, false);
 
-            mVideoList = (ListView) rootView.findViewById(R.id.list);
-            registerForContextMenu(mVideoList);
+            TextView testing = (TextView) rootView.findViewById(R.id.txttest);
+            testing.setText("WHAT NOW?");
 
+            //mVideoList = (ListView) rootView.findViewById(R.id.list);
+            //registerForContextMenu(mVideoList);
+
+                    /**
             mVideoList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -323,11 +319,11 @@ public class MainActivity extends AppCompatActivity {
                         Intent y = new Intent(Intent.ACTION_VIEW, Uri.parse(v.getUrl()));
                         startActivityForResult(y, 0); //ACTIVITY_LOAD = 0?
                     }
-                    /**
+
                      * TODO:Have the APP GALLERY play the video
-                     */
+
                 }
-            });
+            });*/
 
             return rootView;
         }
@@ -336,31 +332,6 @@ public class MainActivity extends AppCompatActivity {
             //Intent intent = new Intent(ACTION_SEND);
             // Intent goes to video
             //startActivityForResult(intent, 0); //Activity load = 0
-        }
-
-        private SimpleRss2ParserCallback getCallback(){
-            if(mCallback == null){
-                mCallback = new SimpleRss2ParserCallback() {
-
-                    @Override
-                    public void onFeedParsed(List<RSSItem> items) {
-                        for(int i = 0; i < items.size(); i++){
-                            Log.d("SimpleRss2ParserDemo", items.get(i).getTitle());
-                            Video v = new Video();
-                            v.setTitle(items.get(i).getTitle());
-                            v.setUrl(items.get(i).getLink().toString());
-                            videos.add(v);
-                        }
-                        populateVideoList(videos);
-                    }
-                    @Override
-                    public void onError(Exception ex) {
-                        Toast.makeText(getContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                };
-            }
-
-            return mCallback;
         }
 
     }
