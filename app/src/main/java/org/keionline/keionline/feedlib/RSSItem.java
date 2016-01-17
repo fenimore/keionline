@@ -9,7 +9,17 @@ public class RSSItem implements Comparable<RSSItem>, Copyable<RSSItem> {
     private String description;
     private String content;
     private String date;
-    
+    private String author;
+
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public void setContent(String content){
     	this.content = content;
     }
@@ -83,5 +93,6 @@ public class RSSItem implements Comparable<RSSItem>, Copyable<RSSItem> {
 		dest.setLink(link.toExternalForm());
 		dest.setDate(date);
 		dest.setContent(content);
+        dest.setAuthor(author);
 	}
 }

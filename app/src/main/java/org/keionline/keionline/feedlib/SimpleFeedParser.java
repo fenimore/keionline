@@ -23,6 +23,8 @@ public abstract class SimpleFeedParser implements FeedParser {
     static final  String LINK = "link";
     static final  String TITLE = "title";
     static final  String ITEM = "item";
+	static final  String ENTRY = "entry";
+	static final String AUTHOR = "dc:creator";
     
     final URL feedUrl;
 

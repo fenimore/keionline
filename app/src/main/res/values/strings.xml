@@ -3,7 +3,12 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="about_app">This applications gives access to KEI\'s blog and video feed</string>
-    <string name="about_kei">Knowledge Ecology International</string>
-    <string name="about_instructions">Instruct</string>
-    <string name="about_info">more info</string>
+    <string name="about_kei">Knowledge Ecology International (KEI) is a not for profit non governmental organization that searches for better outcomes, including new solutions, to the management of knowledge resources. KEI is focused on social justice, particularly for the most vulnerable populations, including low-income persons and marginalized groups. There are probably 5 billion people who live in the margins of the global economy, and an entire planet that depends upon knowledge for economic and personal development, education and health, political power and freedom, culture and fun. We are just now learning about the opportunities to manage knowledge resources in ways that are more efficient, more fair, and responsive to human needs.</string>
+    <string name="about_instructions">To learn more, visit KEI at http://www.keionline.org</string>
+    <string name="about_info">This application uses JSoup, SimpleRss2Android, and Flym Reader (for style). The code is licenced under GPLv3; source code can be found at https://github.com/polypmer/keionline</string>
+    <string name="action_about">About</string>
+    <string name="action_share">Share</string>
+    <string name="action_donate">Donate</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="KEI">Knowledge Ecology International</string>
 </resources>

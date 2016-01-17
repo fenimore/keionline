@@ -59,17 +59,26 @@ public class SimpleRss2Parser extends SimpleFeedParser {
     public List<RSSItem> parse() {
         final RSSItem currentMessage = new RSSItem();
         RootElement root = new RootElement("rss");
+        RootElement root_entry = new RootElement("feed");
         final List<RSSItem> messages = new ArrayList<RSSItem>();
+        final List<RSSItem> video_messages = new ArrayList<RSSItem>(); // return this later on
         Element channel = root.getChild("channel");
+        Element entry = root_entry.getChild(ENTRY);
         Element item = channel.getChild(ITEM);
+
         item.setEndElementListener(new EndElementListener(){
             public void end() {
                 messages.add(currentMessage.copy());
             }
         });
-        item.getChild(TITLE).setEndTextElementListener(new EndTextElementListener(){
+        item.getChild(TITLE).setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentMessage.setTitle(body);
+            }
+        });
+        item.getChild("dc:creator").setEndTextElementListener(new EndTextElementListener() {
+            public void end(String body) {
+                currentMessage.setAuthor(body);
             }
         });
         item.getChild(LINK).setEndTextElementListener(new EndTextElementListener(){
@@ -92,7 +101,7 @@ public class SimpleRss2Parser extends SimpleFeedParser {
                 currentMessage.setContent(body);
             }
         });
-        item.getChild(PUB_DATE).setEndTextElementListener(new EndTextElementListener(){
+        item.getChild(PUB_DATE).setEndTextElementListener(new EndTextElementListener() {
             public void end(String body) {
                 currentMessage.setDate(body);
             }
