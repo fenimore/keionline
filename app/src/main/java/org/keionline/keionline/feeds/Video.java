@@ -6,10 +6,19 @@ package org.keionline.keionline.feeds;
 public class Video {
     private String title;
     private String videoUrl;
-    private String imageUrl;
+    private String thumbnailURL;
     private String url;
     private String description;
+    private String id;
 
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -27,12 +36,12 @@ public class Video {
         this.videoUrl = videoUrl;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getThumbnailURL() {
+        return thumbnailURL;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setThumbnailURL(String thumbnailURL) {
+        this.thumbnailURL = thumbnailURL;
     }
 
     public String getUrl() {

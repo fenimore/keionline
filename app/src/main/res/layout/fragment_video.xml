@@ -4,15 +4,9 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context=".MainActivity$ArticleFragment">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="TESTING"
-        android:id="@+id/txttest"/>
+    tools:context=".MainActivity$VideoFragment">
     <ListView android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/list">
     </ListView>
-
 </LinearLayout>

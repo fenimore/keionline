@@ -9,6 +9,10 @@
         android:layout_height="fill_parent"
         android:id="@+id/list">
     </ListView>
+    <TextView
+        android:layout_width="match_parent"
+        android:id="@+id/loadmessage"
+        android:layout_height="100dp" />
 
 </LinearLayout>
 
