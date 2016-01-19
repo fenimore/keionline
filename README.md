@@ -1,21 +1,17 @@
 KEI application
 
-When adding an image to video row, the description text disappears
+This is an application for (Knowledge Ecology International)[http://keionline.org] 
 
-When using webview inside of linearview, listview will no long click
+There are some super secret API keys which I must try to remember never to commit.
 
 TODO:
-
-Share Button
-Video Links
-Tweets
-About Activity
-Donate Activity
 Settings
-round buttons
+Round Images
+Use twitter4j instead of Twitter official library
 
-USES:
-Jsoup
-SimpleRss2Android
-Flym Reader style :S
+Dependencies:
+-Jsoup
+-(Salendron Simple Rss2 Android)[https://github.com/salendron/Simple-Rss2-Android]
+-Picasso
+-Twitter (fabric) and Google Api
 
