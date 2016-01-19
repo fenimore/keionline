@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 android {
     compileSdkVersion 23
@@ -10,6 +25,10 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+    }
+    packagingOptions {
+        exclude 'META-INF/maven/com.squareup.picasso/picasso/pom.properties'
+        exclude 'META-INF/maven/com.squareup.picasso/picasso/pom.xml'
     }
     buildTypes {
         release {
@@ -33,4 +52,8 @@ dependencies {
     compile files('libs/google-http-client-android-1.21.0.jar')
     compile files('libs/google-http-client-jackson2-1.21.0.jar')
     compile files('libs/jackson-core-2.1.3.jar')
+    compile('com.twitter.sdk.android:twitter:1.12.0@aar') {
+        transitive = true;
+    }
+    compile files('libs/twitter4j-core-4.0.4.jar')
 }

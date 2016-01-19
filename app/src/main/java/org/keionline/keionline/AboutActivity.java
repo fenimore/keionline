@@ -41,6 +41,7 @@ public class AboutActivity extends AppCompatActivity {
         Txt2.setText(R.string.about_kei);
         Txt3 = (TextView) findViewById(R.id.about_instructions);
         Txt3.setText(R.string.about_instructions);
+
         Txt4 = (TextView) findViewById(R.id.about_info);
         Txt4.setText(R.string.about_info);
 

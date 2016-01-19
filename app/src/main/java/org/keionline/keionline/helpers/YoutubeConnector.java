@@ -25,7 +25,7 @@ public class YoutubeConnector {
     private YouTube youtube;
     private YouTube.Search.List query;
     // Must be static?
-    private static final String APIKEYVERYPRIVATE = "SECRETLETTERS AND NUMBER AT RANDOM";
+    private static final String APIKEYVERYPRIVATE = "";
 
     public YoutubeConnector(Context context) {
         YouTube yogurttube;
@@ -51,7 +51,7 @@ public class YoutubeConnector {
         }
     }
     public List<Video> search(){
-        query.setChannelId("UCKCwOrg52WVg9-VQ4IIi6hg");//kei youtube channel
+        query.setChannelId("UCKCwOrg52WVg9-VQ4IIi6hg");//kei youtube channel UCKCwOrg52WVg9-VQ4IIi6hg
         try{
             SearchListResponse response = query.execute();
             List<SearchResult> results = response.getItems();

@@ -1,5 +1,6 @@
 package org.keionline.keionline;
 
+import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,6 +28,7 @@ import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,8 +36,21 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.models.Tweet;
+import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
+import com.twitter.sdk.android.tweetui.TweetUi;
+import com.twitter.sdk.android.tweetui.TweetUtils;
+import com.twitter.sdk.android.tweetui.TweetView;
+import com.twitter.sdk.android.tweetui.UserTimeline;
+
+import io.fabric.sdk.android.Fabric;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.keionline.keionline.adapters.VideoAdapter;
@@ -48,8 +63,14 @@ import org.keionline.keionline.adapters.PagerAdapter;
 import org.keionline.keionline.feeds.Article;
 import org.keionline.keionline.feeds.Video;
 import org.keionline.keionline.helpers.YoutubeConnector;
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
+
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "";
+    private static final String TWITTER_SECRET = "";
+
 
     private Context mContext;
 
@@ -87,18 +108,19 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(Color.BLACK);
         toolbar.setLogo(R.mipmap.ic_launcher);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.addTab(tabLayout.newTab().setText("Videos"));
         tabLayout.addTab(tabLayout.newTab().setText("Blog"));
-        tabLayout.addTab(tabLayout.newTab().setText("Video"));
         tabLayout.addTab(tabLayout.newTab().setText("Tweets"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setTabTextColors(Color.BLACK, R.color.colorAccent);
+
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        mViewPager.setCurrentItem(1);
         final PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount()); //but why is it final?
 
 
@@ -423,13 +445,6 @@ public class MainActivity extends AppCompatActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class TweetFragment extends Fragment {
-
-        //Declaire some variables
-        public TextView Txt1;
-        public TextView Txt2;
-        public TextView Txt3;
-        public TextView Txt4;
-
         /**
          * The fragment argument representing the section number for this
          * fragment.
@@ -454,10 +469,21 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            final View rootView = inflater.inflate(R.layout.tweet_fragment, container, false);
+            // Change this to twitter4j???
+            final View rootView = inflater.inflate(R.layout.fragment_tweet, container, false);
+            final ListView tList = (ListView) rootView.findViewById(R.id.list);
 
+            TwitterAuthConfig authConfig =  new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+            Fabric.with(getActivity(), new TwitterCore(authConfig), new TweetUi());
+
+            final UserTimeline userTimeline = new UserTimeline.Builder()
+                    .screenName("KEI_DC")
+                    .build();
+            final TweetTimelineListAdapter tweetadapter = new TweetTimelineListAdapter.Builder(getActivity())
+                    .setTimeline(userTimeline)
+                    .build();
+            tList.setAdapter(tweetadapter);
             return rootView;
-
         }
     }
 
@@ -477,13 +503,13 @@ public class MainActivity extends AppCompatActivity {
             // Return a ArticleFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    return ArticleFragment.newInstance(position + 1);
-                case 1:
                     return VideoFragment.newInstance(position + 1);
+                case 1:
+                    return ArticleFragment.newInstance(position + 1);
                 case 2:
                     return TweetFragment.newInstance(position + 1);
                 default:
-                    return VideoFragment.newInstance(position + 1);
+                    return ArticleFragment.newInstance(position + 1);
             }
         }
 
@@ -497,9 +523,9 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Blog";
+                    return "Videos";
                 case 1:
-                    return "Video";
+                    return "Blogs";
                 case 2:
                     return "Tweets";
             }

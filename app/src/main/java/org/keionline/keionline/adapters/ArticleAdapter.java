@@ -1,6 +1,7 @@
 package org.keionline.keionline.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -83,6 +84,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
                     }
                     String description = doc.toString();
                     desc.loadData(CSS + a.getPubdate()+ "<hr>" + description, "text/html", "UTF-8");
+
             }
             desc.setOnTouchListener(new WebViewClickListener(desc, parent, position));
 
