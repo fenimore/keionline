@@ -165,7 +165,7 @@ public class ArticleView extends AppCompatActivity {
             //webview = new WebView(getBaseContext());
             //setContentView(webview);
             String page = "<h2>" + title + "</h2><hr>" + result;
-            webview.loadData(page, "text/html", "UTF-8"); //but don't just
+            webview.loadData(page, "text/html; charset=utf-8", "UTF-8"); //but don't just
         }
     }
 
