@@ -151,11 +151,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
 
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition());
 
             }
         });
