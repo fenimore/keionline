@@ -2,7 +2,6 @@ KEI application
 
 This is an application for (Knowledge Ecology International)[http://keionline.org] 
 
-There are some super secret API keys which I must try to remember never to commit.
 
 TODO:
 Settings
