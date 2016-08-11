@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -79,8 +80,8 @@ public class ArticleView extends AppCompatActivity {
         webview = (WebView) findViewById(R.id.webview);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         toolbar.setTitleTextColor(Color.BLACK);
         toolbar.setLogo(R.drawable.ic_action_keiicon);
         //setContentView(R.layout.activity_article);
@@ -126,8 +127,8 @@ public class ArticleView extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_back) {
-            finish();
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
         if (id == R.id.action_share) {
