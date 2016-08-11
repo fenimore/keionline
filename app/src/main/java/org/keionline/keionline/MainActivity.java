@@ -85,7 +85,8 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
 
     // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final String TWITTER_KEY =
+    private static final String TWITTER_KEY = "ODcCsZNcYMGgyp3zRDaOQGuzV";
+    private static final String TWITTER_SECRET = "8RkvVJKRi4UoJL48F6U7N3eMlT9efcB5Gap7ZwEdpfhJhfT18q";
 
 
     private Context mContext;

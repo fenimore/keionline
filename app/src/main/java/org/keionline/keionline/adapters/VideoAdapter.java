@@ -54,8 +54,9 @@ public class VideoAdapter extends ArrayAdapter<Video> {
             TextView title = (TextView) cv.findViewById(R.id.row_heading);
             ImageView image = (ImageView) cv.findViewById(R.id.row_image);
             try {
-                Picasso.with(getContext()).load(v.getThumbnailURL()).resize(300, 200).into(image);
+                Picasso.with(getContext()).load(v.getThumbnailURL()).into(image);
                 //Picasso.with(getContext()).load(v.getThumbnailURL()).into(image);
+                // //load(.resize(300, 200))
             } catch (Exception ex) {
                 Log.v("Video Adapter", "exception");
             }

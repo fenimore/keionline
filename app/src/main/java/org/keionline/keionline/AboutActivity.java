@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.util.Linkify;
 import android.widget.TextView;
 
 /**
@@ -58,9 +59,9 @@ public class AboutActivity extends AppCompatActivity {
         Txt2.setText(R.string.about_kei);
         Txt3 = (TextView) findViewById(R.id.about_instructions);
         Txt3.setText(R.string.about_instructions);
-
+        Linkify.addLinks(Txt3, 1);
         Txt4 = (TextView) findViewById(R.id.about_info);
         Txt4.setText(R.string.about_info);
-
+        Linkify.addLinks(Txt4, 1);
     }
 }

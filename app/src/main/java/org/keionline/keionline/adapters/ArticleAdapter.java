@@ -66,7 +66,7 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
         Article a = getItem(position);
         if (a != null) {
             //ImageView img = (ImageView) v.findViewById(R.id.row_image);
-            WebView desc = (WebView) v.findViewById(R.id.row_description);
+            TextView desc = (TextView) v.findViewById(R.id.row_description);
             TextView txt = (TextView) v.findViewById(R.id.row_title);
             if (txt != null) {
                     txt.setText(a.getTitle());
@@ -82,12 +82,11 @@ public class ArticleAdapter extends ArrayAdapter<Article> {
                     for(Element e:select){
                         e.attr("href", e.absUrl("href"));
                     }
-                    String description = doc.toString();
-                    desc.loadData(CSS + a.getPubdate()+ "<hr>" + description, "text/html", "UTF-8");
+                    String description = doc.text();
+                    desc.setText(a.getPubdate() + "\n=============================\n\n"
+                            + description);
 
             }
-            desc.setOnTouchListener(new WebViewClickListener(desc, parent, position));
-
         }
 
         return v;
