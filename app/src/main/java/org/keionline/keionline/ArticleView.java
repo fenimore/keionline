@@ -82,6 +82,8 @@ public class ArticleView extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
         toolbar.setTitleTextColor(Color.BLACK);
         toolbar.setLogo(R.drawable.ic_action_keiicon);
         //setContentView(R.layout.activity_article);
