@@ -25,7 +25,7 @@ public class YoutubeConnector {
     private YouTube youtube;
     private YouTube.Search.List query;
     // Must be static?
-    private static final String APIKEYVERYPRIVATE = "AIzaSyATANj_qfQ8HwPu-UBcciaBY0dzpcuWXbc";
+    private static final String APIKEYVERYPRIVATE = "YIKES";
 
     public YoutubeConnector(Context context) {
         YouTube yogurttube;
