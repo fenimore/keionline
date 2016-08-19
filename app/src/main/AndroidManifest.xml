@@ -45,7 +45,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="94574bec00ea3ceea64a848fd6cd7d65c3182d3c" />
+            android:value=":S" />
     </application>
 
 </manifest>
